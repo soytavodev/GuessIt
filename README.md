@@ -1,9 +1,6 @@
 # 🧠 GuessIt - Trivia Challenge
 
 ![Project Status](https://img.shields.io/badge/Status-Live%20&%20Playable-success?style=for-the-badge)
-![PHP](https://img.shields.io/badge/PHP-8.2-777bb4?style=for-the-badge&logo=php)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479a1?style=for-the-badge&logo=mysql)
-![CSS3](https://img.shields.io/badge/Style-Clash%20Theme-ffca28?style=for-the-badge&logo=css3)
 
 > **[🎮 JUGAR AHORA (LIVE DEMO)](https://guessit.gamer.gd/index.php)**
 > *¡Regístrate y compite por el primer lugar en el ranking global!*
@@ -14,7 +11,7 @@
 
 **GuessIt** es una aplicación web dinámica de trivia desarrollada desde cero para demostrar el dominio de **PHP Nativo** y **SQL** sin depender de frameworks.
 
-El objetivo técnico fue construir una arquitectura escalable, segura y modular, implementando un sistema de usuarios completo, lógica de juego basada en sesiones y un diseño visual de alto impacto ("Clash Theme") utilizando únicamente CSS3 moderno.
+El objetivo técnico fue construir una arquitectura escalable, segura y modular, implementando un sistema de usuarios completo, lógica de juego basada en sesiones y un diseño visual de alto impacto utilizando únicamente CSS3 moderno.
 
 ## 🚀 Características Principales
 
