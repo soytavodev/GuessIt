@@ -1,0 +1,19 @@
+<?php
+// config/db.php.example
+// Copia este archivo como config/db.php y pon tus datos de MySQL.
+// config/db.php está en .gitignore para no subir contraseñas al repositorio.
+
+$host = '127.0.0.1';
+$dbname = 'guessit_db';
+$user = 'tu_usuario';
+$pass = 'tu_contraseña';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+} catch (PDOException $e) {
+    error_log('Error de conexión: ' . $e->getMessage());
+    die('No se pudo conectar con la base de datos.');
+}

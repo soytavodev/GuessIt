@@ -36,11 +36,16 @@ $current_index = $game['current_index'];
 
 // 3. PROCESAR RESPUESTA (SI EL USUARIO HIZO CLIC)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['option_id'])) {
-    $selected_option_id = $_POST['option_id'];
-    
-    // Verificamos en la BD si esa opción es la correcta (is_correct = 1)
-    $stmt = $pdo->prepare("SELECT is_correct FROM options WHERE id = :id");
-    $stmt->execute(['id' => $selected_option_id]);
+    $selected_option_id = (int) $_POST['option_id'];
+
+    // Verificamos en la BD si esa opción es la correcta (is_correct = 1).
+    // También comprobamos que la opción sea de la pregunta actual: si no,
+    // alguien podría enviar a mano el id de una respuesta correcta de otra pregunta.
+    $stmt = $pdo->prepare("SELECT is_correct FROM options WHERE id = :id AND question_id = :qid");
+    $stmt->execute([
+        'id' => $selected_option_id,
+        'qid' => $game['question_ids'][$current_index],
+    ]);
     $option = $stmt->fetch();
 
     if ($option && $option['is_correct'] == 1) {

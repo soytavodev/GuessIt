@@ -26,9 +26,9 @@ try {
     $stmt = $pdo->query($sql);
     $leaders = $stmt->fetchAll();
 } catch (PDOException $e) {
-    // En desarrollo mostramos error, en producción NUNCA.
-    // Como aún no hacemos la FASE C (Seguridad), lo dejamos así por hoy.
-    die("Error al cargar ranking: " . $e->getMessage());
+    // El detalle del error va al log del servidor, nunca a la pantalla.
+    error_log("Error al cargar ranking: " . $e->getMessage());
+    die("No se pudo cargar el ranking. Inténtalo más tarde.");
 }
 ?>
 

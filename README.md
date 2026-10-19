@@ -1,87 +1,77 @@
-# 🧠 GuessIt - Trivia Challenge
+# GuessIt
 
-![Project Status](https://img.shields.io/badge/Status-Live%20&%20Playable-success?style=for-the-badge)
+Juego de preguntas de cultura general hecho con PHP y MySQL. Te registras, juegas partidas de 10 preguntas al azar y compites en un ranking con el resto de jugadores.
 
-> **[🎮 JUGAR AHORA (LIVE DEMO)](https://guessit.gamer.gd/index.php)**
-> *¡Regístrate y compite por el primer lugar en el ranking global!*
+Proyecto de 1.º de DAM, sin frameworks.
 
----
+Demo: [guessit.gamer.gd](https://guessit.gamer.gd/index.php)
 
-## 📋 Descripción
-
-**GuessIt** es una aplicación web dinámica de trivia desarrollada desde cero para demostrar el dominio de **PHP Nativo** y **SQL** sin depender de frameworks.
-
-El objetivo técnico fue construir una arquitectura escalable, segura y modular, implementando un sistema de usuarios completo, lógica de juego basada en sesiones y un diseño visual de alto impacto utilizando únicamente CSS3 moderno.
-
-## 🚀 Características Principales
-
-### 🔒 Backend & Seguridad
-* **Auth System:** Registro y Login completos con hash de contraseñas (`password_hash` / `bcrypt`).
-* **State Management:** Lógica de juego persistente mediante Sesiones PHP, previniendo la pérdida de datos al recargar.
-* **Security First:** Protección contra Inyección SQL mediante **PDO Prepared Statements** y sanitización de inputs (XSS).
-* **Error Handling:** Sistema de manejo de errores silencioso en producción para evitar fugas de información sensible.
-
-### 💾 Base de Datos (MySQL)
-* **Modelo Relacional:** Esquema normalizado con tablas para Usuarios, Preguntas, Opciones y Partidas.
-* **Data Seeding:** Script de inicialización con +50 preguntas aleatorias de diversas categorías (Ciencia, Historia, Tech, Cine).
-* **Advanced Queries:** Ranking global generado mediante consultas complejas (`JOIN`, `GROUP BY`, `MAX`, `ORDER BY`).
-
-### 🎨 Frontend (Clash Theme UI)
-* **CSS Puro:** Sin Bootstrap ni Tailwind. Todo el estilo fue escrito a mano.
-* **Diseño Skeuomórfico:** Botones 3D, sombras profundas, bordes "texturizados" y tipografía *Titan One*.
-* **Responsive:** Diseño adaptable a móviles y escritorio mediante Flexbox y CSS Grid.
-
----
-
-## 📸 Galería
-
-| Inicio & Login | Gameplay | Ranking Global |
+| Inicio | Partida | Ranking |
 |:---:|:---:|:---:|
-| ![Inicio](assets/img/home.png) | ![Juego](assets/img/game.png) | ![Ranking](assets/img/ranking.png) |
+| ![Inicio](assets/img/home.png) | ![Partida](assets/img/game.png) | ![Ranking](assets/img/ranking.png) |
 
----
+## Qué hace
 
-## 🛠️ Stack Tecnológico
+- **Cuentas de usuario:** registro e inicio de sesión. Las contraseñas se guardan con `password_hash` (bcrypt) y se comprueban con `password_verify`.
+- **Partidas:** se eligen 10 preguntas al azar y las opciones salen en orden aleatorio. El progreso se guarda en la sesión, así que recargar la página no rompe la partida.
+- **Perfil:** partidas jugadas, mejor puntuación y media.
+- **Ranking:** los 10 mejores jugadores según su mejor partida, calculado con una consulta con `JOIN`, `GROUP BY` y `MAX`.
+- **Preguntas:** 51 preguntas de varios temas repartidas en dos scripts SQL.
 
-* **Lenguaje:** PHP 8+ (Estilo Procedural/MVC Manual).
-* **Base de Datos:** MySQL / MariaDB.
-* **Frontend:** HTML5 Semántico, CSS3 (Variables, Gradients, Transformations).
-* **Entorno:** XAMPP (Local) / LAMP Stack (Producción en InfinityFree).
-* **Control de Versiones:** Git & GitHub.
+## Detalles técnicos
 
-## 📂 Estructura del Proyecto
+- **PHP 8** procedural, con cabecera y pie compartidos en `templates/`.
+- **MySQL** con **PDO** y consultas preparadas.
+- El servidor comprueba que la respuesta enviada pertenece a la pregunta actual, para que no se pueda sumar puntos enviando el id de otra respuesta.
+- Los textos que vienen de la base de datos o del usuario se escapan con `htmlspecialchars` antes de mostrarlos.
+- Los errores de base de datos se guardan en el log del servidor y el usuario solo ve un mensaje genérico.
+- **CSS** escrito a mano, sin Bootstrap ni Tailwind, con las fuentes Titan One y Roboto.
 
-El proyecto sigue una estructura limpia para facilitar la mantenibilidad:
+## Estructura
 
 ```text
 GuessIt/
-├── assets/          # CSS, JS, Imágenes y Fuentes
-├── config/          # Conexión a BD (Ignorado en git por seguridad)
-├── database/        # Scripts SQL (Schema y Seeds)
-├── includes/        # Lógica reutilizable (Auth, Funciones)
-├── templates/       # Componentes visuales (Header, Footer)
-├── index.php        # Controlador principal
-└── ...              # Archivos de vistas y lógica (login, play, result)
+├── assets/          # CSS e imágenes
+├── config/
+│   └── db.php.example   # Plantilla de conexión (copiar como db.php)
+├── database/
+│   ├── schema.sql           # Tablas: users, questions, options, games
+│   ├── seeds.sql            # Primeras 5 preguntas
+│   └── expansion_pack.sql   # 46 preguntas más
+├── templates/       # Cabecera y pie
+├── index.php        # Portada
+├── register.php, login.php, logout.php
+├── play.php         # Partida
+├── result.php       # Resultado y guardado de la partida
+├── dashboard.php    # Perfil con estadísticas
+└── ranking.php      # Ranking
 ```
 
-## 📦 Instalación Local
-Si deseas correr este proyecto en tu máquina:
+## Instalación en local
 
-1. Clonar el repositorio:
-git clone [https://github.com/soytavodev/GuessIt.git](https://github.com/soytavodev/GuessIt.git)
+Necesitas PHP 8 con la extensión `pdo_mysql` y MySQL o MariaDB.
 
-2. Configurar Base de Datos:
-Crea una BD llamada guessit_db en tu gestor MySQL.
-Importa el archivo database/schema.sql.
-Ejecuta el script database/seeds.sql para cargar las preguntas.
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/soytavodev/GuessIt.git
+   cd GuessIt
+   ```
+2. Crea la base de datos y carga las tablas y las preguntas:
+   ```bash
+   mysql -u root -p -e "CREATE DATABASE guessit_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+   mysql -u root -p guessit_db < database/schema.sql
+   mysql -u root -p guessit_db < database/seeds.sql
+   mysql -u root -p guessit_db < database/expansion_pack.sql
+   ```
+3. Copia la configuración y pon tus datos de MySQL:
+   ```bash
+   cp config/db.php.example config/db.php
+   ```
+4. Arranca el servidor de PHP y abre `http://localhost:8000`:
+   ```bash
+   php -S localhost:8000
+   ```
 
-3. Conexión:
-Crea un archivo config/db.php basado en el entorno.
-Define tus credenciales ($host, $user, $pass, $dbname).
+## Autor
 
-4. Ejecutar:
-Abre el proyecto en tu servidor local (ej: localhost/GuessIt).
-
----
-
-Desarrollado por Gustavo Delnardo.
+Gustavo Delnardo · [GitHub](https://github.com/soytavodev) · [Web](https://gustavo-delnardo.vercel.app)
