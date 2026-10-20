@@ -16,7 +16,7 @@ Capturas: [gustavo-delnardo.vercel.app/portfolio/guessit](https://gustavo-delnar
 - **Partidas:** se eligen 10 preguntas al azar y las opciones salen en orden aleatorio. El progreso se guarda en la sesión, así que recargar la página no rompe la partida.
 - **Perfil:** partidas jugadas, mejor puntuación y media.
 - **Ranking:** los 10 mejores jugadores según su mejor partida, calculado con una consulta con `JOIN`, `GROUP BY` y `MAX`.
-- **Preguntas:** 51 preguntas de varios temas repartidas en dos scripts SQL.
+- **Preguntas:** 50 preguntas de cultura general (ciencia, historia, geografía, cine...).
 
 ## Detalles técnicos
 
@@ -36,8 +36,8 @@ GuessIt/
 │   └── db.php.example   # Plantilla de conexión (copiar como db.php)
 ├── database/
 │   ├── schema.sql           # Tablas: users, questions, options, games
-│   ├── seeds.sql            # Primeras 5 preguntas
-│   └── expansion_pack.sql   # 46 preguntas más
+│   ├── seeds.sql            # 5 preguntas de prueba
+│   └── expansion_pack.sql   # Las 50 preguntas (vacía la tabla y las carga todas)
 ├── templates/       # Cabecera y pie
 ├── index.php        # Portada
 ├── register.php, login.php, logout.php
@@ -60,7 +60,6 @@ Necesitas PHP 8 con la extensión `pdo_mysql` y MySQL o MariaDB.
    ```bash
    mysql -u root -p -e "CREATE DATABASE guessit_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
    mysql -u root -p guessit_db < database/schema.sql
-   mysql -u root -p guessit_db < database/seeds.sql
    mysql -u root -p guessit_db < database/expansion_pack.sql
    ```
 3. Copia la configuración y pon tus datos de MySQL:
