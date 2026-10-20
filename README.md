@@ -4,7 +4,7 @@ Juego de preguntas de cultura general hecho con PHP y MySQL. Te registras, juega
 
 Proyecto de 1.º de DAM, sin frameworks.
 
-Demo: [guessit.gamer.gd](https://guessit.gamer.gd/index.php)
+Capturas: [gustavo-delnardo.vercel.app/portfolio/guessit](https://gustavo-delnardo.vercel.app/portfolio/guessit)
 
 | Inicio | Partida | Ranking |
 |:---:|:---:|:---:|
